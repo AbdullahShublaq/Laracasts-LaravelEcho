@@ -23,7 +23,9 @@ class Order {
 }
 
 Route::get('/', function () {
-    \App\Events\OrderStatusUpdate::dispatch(new Order(25));
-
     return view('welcome');
+});
+
+Route::get('/update', function() {
+    \App\Events\OrderStatusUpdate::dispatch(new Order(25));
 });
