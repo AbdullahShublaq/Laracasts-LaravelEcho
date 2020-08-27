@@ -21,11 +21,21 @@ class Order {
         $this->id = $id;
     }
 }
+Route::get('/update', function() {
+    \App\Events\OrderStatusUpdate::dispatch(new Order(25));
+});
+
+/*--------------------------------------------------------------------------*/
 
 Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/update', function() {
-    \App\Events\OrderStatusUpdate::dispatch(new Order(25));
+Route::get('/tasks', function (){
+    return \App\Task::latest()->pluck('body');
+});
+Route::post('/tasks', function (){
+    $task = \App\Task::forceCreate(request(['body']));
+
+    event(new \App\Events\TaskCreated($task));
 });
