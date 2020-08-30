@@ -1918,6 +1918,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -1939,11 +1940,13 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     addTask: function addTask() {
-      axios.post('/tasks', {
-        body: this.newTask
-      });
-      this.tasks.push(this.newTask);
-      this.newTask = '';
+      if (this.newTask !== '') {
+        axios.post('/tasks', {
+          body: this.newTask
+        });
+        this.tasks.push(this.newTask);
+        this.newTask = '';
+      }
     }
   }
 });
@@ -43618,10 +43621,9 @@ var render = function() {
           expression: "newTask"
         }
       ],
-      attrs: { type: "text" },
+      attrs: { type: "text", placeholder: "Add New Task..." },
       domProps: { value: _vm.newTask },
       on: {
-        blur: _vm.addTask,
         input: function($event) {
           if ($event.target.composing) {
             return
@@ -43629,7 +43631,11 @@ var render = function() {
           _vm.newTask = $event.target.value
         }
       }
-    })
+    }),
+    _vm._v(" "),
+    _c("button", { attrs: { type: "button" }, on: { click: _vm.addTask } }, [
+      _vm._v("ADD")
+    ])
   ])
 }
 var staticRenderFns = []

@@ -4,7 +4,8 @@
             <li v-for="task in tasks" v-text="task"></li>
         </ul>
 
-        <input type="text" v-model="newTask" @blur="addTask">
+        <input type="text" v-model="newTask" placeholder="Add New Task...">
+        <button type="button" @click="addTask">ADD</button>
     </div>
 </template>
 
@@ -27,9 +28,11 @@
 
         methods: {
             addTask() {
-                axios.post('/tasks', {body: this.newTask});
-                this.tasks.push(this.newTask);
-                this.newTask = '';
+                if (this.newTask !== ''){
+                    axios.post('/tasks', {body: this.newTask});
+                    this.tasks.push(this.newTask);
+                    this.newTask = '';
+                }
             }
         }
     }
